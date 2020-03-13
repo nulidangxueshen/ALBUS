@@ -1,5 +1,5 @@
 # ALBUS
-A Method for efficiently processing SpMV using SIMD and load balancing
+A Method for efficiently processing SpMV using SIMD and load balancing  
 **`------------------------------------------------------------------`  
 `FileName   : dense.mtx`  
 `Iterations : 4096`  
@@ -39,5 +39,5 @@ A Method for efficiently processing SpMV using SIMD and load balancing
 `i = 2047 , mtx_ans = 125099.232999`  
 `--------------------------Check Answer----------------------------`  
 `right.....PASS!`  
-`------------------------------------------------------------------`  
+`------------------------------------------------------------------`  **
 
