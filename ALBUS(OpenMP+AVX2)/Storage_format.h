@@ -120,6 +120,7 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         memset(row_ptr1,0,sizeof(INT)*(row_num+1));
         col_idx = (INT *)aligned_alloc(64,sizeof(INT)*NZZ_NUM);
         mtx_val = (DOU *)aligned_alloc(64,sizeof(DOU)*NZZ_NUM);
+		vec_val = (DOU *)aligned_alloc(64,sizeof(DOU)*col_num);
         memset(mtx_val,0,sizeof(DOU)*NZZ_NUM);
         memset(col_idx,0,sizeof(INT)*NZZ_NUM);
         if(str[4]=="symmetric")
@@ -129,21 +130,21 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
                         if(row_idx1[i]!=col_idx1[i])
                         {
                                 INT offset      = row_ptr[row_idx1[i]] + row_ptr1[row_idx1[i]];
-                                col_idx[i]      = col_idx1[i];
-                                mtx_val[offset] = mtx_val1[i];
-                                row_ptr1[row_idx1[i]]++;
+                                col_idx[offset] = col_idx1[i];
+                        	mtx_val[offset] = mtx_val1[i];
+                        	row_ptr1[row_idx1[i]]++;
 
                                 offset          = row_ptr[col_idx1[i]] + row_ptr1[col_idx1[i]];
-                                col_idx[i]      = row_idx1[i];
+                                col_idx[offset] = row_idx1[i];
                                 mtx_val[offset] = mtx_val1[i];
                                 row_ptr1[col_idx1[i]]++;
                         }
                         else
                         {
                                 INT offset      = row_ptr[row_idx1[i]] + row_ptr1[row_idx1[i]];
-                                col_idx[i]      = col_idx1[i];
-                                mtx_val[offset] = mtx_val1[i];
-                                row_ptr1[row_idx1[i]]++;
+                                col_idx[offset] = col_idx1[i];
+                        	mtx_val[offset] = mtx_val1[i];
+                        	row_ptr1[row_idx1[i]]++;
                         }
                 }
         }
@@ -152,8 +153,8 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
                 for(i=0;i<nzz_num;i++)
                 {
                         INT offset      = row_ptr[row_idx1[i]] + row_ptr1[row_idx1[i]];
-                        col_idx[i]      = col_idx1[i];
-                        mtx_val[offset] = mtx_val1[i];
+			col_idx[offset] = col_idx1[i];
+			mtx_val[offset] = mtx_val1[i];
                         row_ptr1[row_idx1[i]]++;
                 }
         }
@@ -162,8 +163,6 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         free(mtx_val1);
         free(col_idx1);
         nzz_num = NZZ_NUM;
-        //----------------------------------------------------------------//
-        vec_val = (DOU *)aligned_alloc(64,sizeof(DOU)*col_num);
         srand(time(NULL));
         for(i=0;i<col_num;i++)
         {
@@ -174,4 +173,5 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         par_set[0] = row_num;
         par_set[1] = col_num;
         par_set[2] = nzz_num;
+		par_set[8] = min(200000ull, max(100ull, ((16ull << 30) / nzz_num)));
 }
