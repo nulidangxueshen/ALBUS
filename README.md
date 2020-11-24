@@ -1,5 +1,9 @@
 # ALBUS
-A Method for efficiently processing SpMV using SIMD and load balancing  
+[A Method for efficiently processing SpMV using SIMD and load balancing](https://doi.org/10.1016/j.future.2020.10.036)  
+
+our paper:  
+
+H. Bian, J. Huang, L. Liu, D. Huang, X. Wang, ALBUS: A method for efficiently processing SpMV using SIMD and Load balancing, Future Generation Computer Systems, Volume 116, 2021, pp. 371-392.
 
 ## Manual:
 
