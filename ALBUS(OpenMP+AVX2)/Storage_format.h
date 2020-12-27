@@ -120,7 +120,7 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         memset(row_ptr1,0,sizeof(INT)*(row_num+1));
         col_idx = (INT *)aligned_alloc(64,sizeof(INT)*NZZ_NUM);
         mtx_val = (DOU *)aligned_alloc(64,sizeof(DOU)*NZZ_NUM);
-		vec_val = (DOU *)aligned_alloc(64,sizeof(DOU)*col_num);
+	vec_val = (DOU *)aligned_alloc(64,sizeof(DOU)*col_num);
         memset(mtx_val,0,sizeof(DOU)*NZZ_NUM);
         memset(col_idx,0,sizeof(INT)*NZZ_NUM);
         if(str[4]=="symmetric")
@@ -173,5 +173,6 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         par_set[0] = row_num;
         par_set[1] = col_num;
         par_set[2] = nzz_num;
-		par_set[8] = min(200000ull, max(100ull, ((16ull << 30) / nzz_num)));
+	par_set[8] = 4 * min(200000ull, max(100ull, ((16ull << 30) / nzz_num)));
+	cout<<par_set[8]<<endl;
 }
