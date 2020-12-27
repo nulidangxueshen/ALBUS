@@ -12,7 +12,7 @@ CC=icpc
 
 #icc
 spmv_albus:
-	$(CC) -g -xCORE-AVX2 -fopenmp -O3 -o spmv_albus main.cpp
+	$(CC) -g -w -fno-alias -xCORE-AVX2 -fopenmp -O3 -o spmv_albus main.cpp
 
 .PHONY:clean
 	rm spmv_albus
