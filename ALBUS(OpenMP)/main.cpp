@@ -7,6 +7,7 @@
 #include<omp.h>
 #include<sys/time.h>
 #include<stdlib.h>
+#include<omp.h>
 #define INT int
 #define DOU double
 
@@ -45,40 +46,45 @@ int main(int argc , char ** argv)
         INT  * par_set;
         INT  * start;
         INT  * end;
+	INT  * start1;
+        INT  * end1;
         DOU  * mid_ans;
-        INT  * block_size;
         DOU    start_time,end_time;
         INT    thread_nums = omp_get_max_threads();
         fp_mtx = fopen(filename,"rb+");
         printf("--------------Matrix Information and Performance Data-------------\n");
         ReadFile(fp_mtx,row_ptr,col_idx,mtx_val,vec_val,par_set);
         //---------------------------------------------------------------//
-        mtx_ans    = (DOU *)aligned_alloc(64,sizeof(DOU)*par_set[0]);
+        mtx_ans    = (DOU *)aligned_alloc(64,sizeof(DOU)*(par_set[0]+1));
         //---------------------------------------------------------------//
-        start      = (INT *)malloc(sizeof(INT)*thread_nums);
-        end        = (INT *)malloc(sizeof(INT)*thread_nums);
-        mid_ans    = (DOU *)malloc(sizeof(DOU)*thread_nums*2);
-        block_size = (INT *)malloc(sizeof(INT)*(thread_nums+1));
+        start      = (INT *)aligned_alloc(64,sizeof(INT)*thread_nums);
+        end        = (INT *)aligned_alloc(64,sizeof(INT)*thread_nums);
+	start1     = (INT *)aligned_alloc(64,sizeof(INT)*thread_nums);
+        end1       = (INT *)aligned_alloc(64,sizeof(INT)*thread_nums);
+        mid_ans    = (DOU *)aligned_alloc(64,sizeof(DOU)*thread_nums*2);
 	ite = par_set[8];
         //---------------------------------------------------------------//
-        albus_balance(row_ptr,par_set,start,end,mid_ans,block_size,thread_nums);
+        albus_balance(row_ptr,par_set,start,end,start1,end1,mid_ans,thread_nums);
         struct timeval startTime,endTime;
         //-----------------------------Warm Up---------------------------//
         for(INT i=0;i<ite;i++)
         {
-                SPMV_DOU(row_ptr,col_idx,mtx_val,par_set,mtx_ans,vec_val,start,end,mid_ans,block_size,thread_nums);
+                SPMV_DOU(row_ptr,col_idx,mtx_val,par_set,mtx_ans,vec_val,start,end,start1,end1,mid_ans,thread_nums);
         }
         //---------------------------------------------------------------//
         DOU Timeuse=0;
         gettimeofday(&startTime,NULL);
-        for(INT i=0;i<ite;i++)
+	DOU start12 = omp_get_wtime();
+	for(INT i=0;i<ite;i++)
         {
-                SPMV_DOU(row_ptr,col_idx,mtx_val,par_set,mtx_ans,vec_val,start,end,mid_ans,block_size,thread_nums);
+                SPMV_DOU(row_ptr,col_idx,mtx_val,par_set,mtx_ans,vec_val,start,end,start1,end1,mid_ans,thread_nums);
         }
+	DOU end12 = omp_get_wtime();
         gettimeofday(&endTime,NULL);
         Timeuse = (endTime.tv_sec - startTime.tv_sec) + (endTime.tv_usec - startTime.tv_usec)/1000000.0;
         //-----------------------Performance Data------------------------//
         printf("ALBUS parallel time        >>>>>> %lf ms \n",Timeuse*1000/ite*1.0);
+	printf("ALBUS parallel time        >>>>>> %lf ms \n",(end12-start12)*1000/ite*1.0);
         printf("ALBUS parallel SPMV Gflops >>>>>> %lf GFlops \n",(par_set[2]/((Timeuse)/ite*1.0)/1000000000)*2.0);
         //----------------------------check------------------------------//
         mtx_ans_serial = (DOU *)malloc(sizeof(DOU)*par_set[0]);
@@ -94,7 +100,7 @@ int main(int argc , char ** argv)
         printf("-----------------------Serial CSR TEST ANSWER---------------------\n");
         for(INT i=0;i<par_set[0];i++)
         {
-                mtx_ans_serial[i]=0.0;
+                mtx_ans_serial[i]=0;
                 for(INT j=row_ptr[i];j<row_ptr[i+1];j++)
                 {
                         mtx_ans_serial[i]+=mtx_val[j]*vec_val[col_idx[j]];
@@ -134,7 +140,8 @@ int main(int argc , char ** argv)
         free(par_set);
         free(start);
         free(end);
+	free(start1);
+	free(end1);
         free(mid_ans);
-        free(block_size);
         return 0;
 }

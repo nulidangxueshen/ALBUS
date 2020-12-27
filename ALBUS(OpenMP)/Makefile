@@ -8,11 +8,11 @@ CC=icpc
 
 #g++
 #spmv_albus:
-#	$(CC) -march=native -fopenmp -O3 -o spmv_albus main.cpp
+#	$(CC) -march=native -mavx -mavx2 -opt-prefetch=3 -fopenmp -O3 -o spmv_albus main.cpp
 
 #icc
 spmv_albus:
-	$(CC) -xCORE-AVX2 -qopt-prefetch=3 -fopenmp -O3 -o spmv_albus main.cpp
+	$(CC) -g -w -fno-alias -xCORE-AVX2 -qopt-prefetch=3 -fopenmp -O3 -o spmv_albus main.cpp
 
 .PHONY:clean
 	rm spmv_albus

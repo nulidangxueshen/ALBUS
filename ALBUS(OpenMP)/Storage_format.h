@@ -77,7 +77,7 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         {
                 if(str[3]=="real")
                 {
-                        fscanf(fp_mtx,"%d %d %lf",&row,&col,&nzz);
+                        fscanf(fp_mtx,"%d %d %lg",&row,&col,&nzz);
                 }
                 if(str[3]=="pattern")
                 {
@@ -163,7 +163,6 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         free(mtx_val1);
         free(col_idx1);
         nzz_num = NZZ_NUM;
-	//----------------------------------------------------------------//
         srand(time(NULL));
         for(i=0;i<col_num;i++)
         {
@@ -174,5 +173,6 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         par_set[0] = row_num;
         par_set[1] = col_num;
         par_set[2] = nzz_num;
-	par_set[8] = min(200000ull, max(100ull, ((16ull << 30) / nzz_num)));
+	par_set[8] = 4 * min(200000ull, max(100ull, ((16ull << 30) / nzz_num)));
+	cout<<par_set[8]<<endl;
 }
