@@ -68,7 +68,7 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         INT * col_idx1 = (INT *)aligned_alloc(64,sizeof(INT)*nzz_num);
         INT * row_idx1 = (INT *)aligned_alloc(64,sizeof(INT)*nzz_num);
         DOU * mtx_val1 = (DOU *)aligned_alloc(64,sizeof(DOU)*nzz_num);
-        row_ptr = (INT *)aligned_alloc(64,sizeof(INT)*(row_num+1));
+        row_ptr = (INT *)aligned_alloc(4096,sizeof(INT)*(row_num+1));
         memset(row_ptr1,0,sizeof(INT)*(row_num+1));
         memset(row_ptr ,0,sizeof(INT)*(row_num+1));
         memset(mtx_val1,0,sizeof(DOU)*nzz_num);
@@ -123,9 +123,9 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
         NZZ_NUM = num1;
         memcpy(row_ptr,row_ptr1,(row_num+1)*sizeof(INT));
         memset(row_ptr1,0,sizeof(INT)*(row_num+1));
-        col_idx = (INT *)aligned_alloc(64,sizeof(INT)*NZZ_NUM);
-        mtx_val = (DOU *)aligned_alloc(64,sizeof(DOU)*NZZ_NUM);
-	vec_val = (DOU *)aligned_alloc(64,sizeof(DOU)*col_num);
+        col_idx = (INT *)aligned_alloc(4096,sizeof(INT)*NZZ_NUM);
+        mtx_val = (DOU *)aligned_alloc(4096,sizeof(DOU)*NZZ_NUM);
+	vec_val = (DOU *)aligned_alloc(4096,sizeof(DOU)*col_num);
         memset(mtx_val,0,sizeof(DOU)*NZZ_NUM);
         memset(col_idx,0,sizeof(INT)*NZZ_NUM);
         if(str[4]=="symmetric")
