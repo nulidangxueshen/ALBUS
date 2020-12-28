@@ -89,6 +89,11 @@ void ReadFile(FILE * fp_mtx,INT *&row_ptr,INT *&col_idx,DOU *&mtx_val,DOU *&vec_
                         fscanf(fp_mtx,"%d %d %d",&row,&col,&nzz_int);
                         nzz = nzz_int * 1.0;
                 }
+		if(str[3]=="complex")
+                {
+                        DOU tmp;
+                        fscanf(fp_mtx,"%d %d %lg %lg",&row,&col,&nzz,&tmp);
+                }
                 row--;
                 col--;
                 row_ptr1[row]++;
