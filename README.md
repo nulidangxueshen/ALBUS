@@ -5,6 +5,54 @@ our paper:
 
 H. Bian, J. Huang, L. Liu, D. Huang, X. Wang, ALBUS: A method for efficiently processing SpMV using SIMD and Load balancing, Future Generation Computer Systems, Volume 116, 2021, pp. 371-392.
 
+
+## Performance
+**Unit**：GFlops
+
+**Equipment**：Intel(R) Xeon(R) Gold 6242 CPU (double socket)(16cores * 2)
+
+**NOTE:**
+
+CSR5(ICS'15)
+
+Merge(SC'16)
+
+CVR(CGO'18)
+
+MKL(Intel oneAPI 2021)
+
+|  Sparse Matrix  | ALBUS  | CSR5   | CVR  |  Merge   |   MKL  |
+|      :----:     | :----: | :----: | :----: | :----: | :----: |
+|       rma10     | **94.52** | 42.05 | 65.84 |  | |
+| cant            | 65.38 | 52.66 | **68.66** |   |  |
+| mac_econ_fwd500 | **68.56** | 25.33 | 40.79 |   |  |
+| mc2depi         | **75.26** | 45.10 | 31.78 |   |  |
+| shipsec1        | **33.03** | 31.14 | 31.85 |   |  |
+| scircuit        | **43.32** | 20.25 | 34.35 |   |  |
+| dc2             | **65.32** | 24.59 | 39.28 |   |  |
+| amazon-2008     | **17.82** | 15.55 | 13.17 |   |  |
+| consph          | **53.14** | 43.74 | 51.07 |   |  |
+| cop20k_A        | **41.26** | 36.06 | 32.16 |   |  |
+| crankseg_2      | **24.93** | 23.22 | 24.07 |   |  |
+| ins2            | 23.06 | 18.92 | **34.16** |   |  |
+| circuit5M       | **13.02** | 12.61 | 11.10 |   |  |
+| FullChip        | **13.32** | 12.63 | 11.18 |   |  |
+| mip1            | **26.21** | 25.80 | 26.10 |   |  |
+| pdb1HYS         | 65.44 | 57.03 | **68.23** |   |  |
+| pwtk            | **25.53** | 24.54 | 24.18 |   |  |
+| LP              | **19.89** | 19.23 | 19.54 |   |  |
+| in-2004         | **18.36** | 17.55 | 15.50 |   |  |
+| eu-2005         | **19.98** | 18.76 | 16.37 |   |  |
+| road_usa        |  **6.71** | 6.56 | 6.27 |   |  |
+| roadNet-CA      | **14.60** | 12.23 | 10.86 |   |  |
+| soc-LiveJournal1| **9.31**  | 7.95 | 8.39 |   |  |
+| webbase-1M      | **34.14** | 21.92 | 22.13 |   |  |
+| web-Google      | **11.23** | 10.40 | 8.09 |   |  |
+| web-Stanford    | **26.62** | 18.28 | 13.42 |   |  |
+| Stanford        | **19.65** | 15.93 | 11.24 |   |  |
+| wiki-topcats    | **15.24** | 13.62 | 12.56 |   |  |
+
+
 ## Manual:
 
 (1) Enter the `make` command to compile the Makefile.    
