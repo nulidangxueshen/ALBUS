@@ -118,8 +118,7 @@ MKL(Intel oneAPI 2021)
 
 (3) This experiment was tested on two CPU platforms: `Dual Socket Intel(R) Xeon(R) CPU E5-2670 v3` and `Dual Socket Intel(R) Xeon(R) Silver 4110 CPU `.  
 
-## Cite This
-
+## Cite This:  
 ```
 @article{BIAN2021371,
 title = {ALBUS: A method for efficiently processing SpMV using SIMD and Load balancing},
