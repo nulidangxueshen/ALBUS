@@ -117,3 +117,21 @@ MKL(Intel oneAPI 2021)
 (2) This program supports `g++` and `icc` compilation. The Makefile file in this program is initially set to be compiled by the `icc` compiler. You can also comment the `icc` compiled code and use the `g++` compiler in the file to compile. For comparison experiments, please choose The same compilation environment.  
 
 (3) This experiment was tested on two CPU platforms: `Dual Socket Intel(R) Xeon(R) CPU E5-2670 v3` and `Dual Socket Intel(R) Xeon(R) Silver 4110 CPU `.  
+
+## Cite This
+
+```
+@article{BIAN2021371,
+title = {ALBUS: A method for efficiently processing SpMV using SIMD and Load balancing},
+journal = {Future Generation Computer Systems},
+volume = {116},
+pages = {371-392},
+year = {2021},
+issn = {0167-739X},
+doi = {https://doi.org/10.1016/j.future.2020.10.036},
+url = {https://www.sciencedirect.com/science/article/pii/S0167739X2033020X},
+author = {Haodong Bian and Jianqiang Huang and Lingbin Liu and Dongqiang Huang and Xiaoying Wang},
+keywords = {SpMV, ALBUS, CSR5, MKL, SIMD, Load balancing},
+abstract = {SpMV (Sparse matrix–vector multiplication) is widely used in many fields. Improving the performance of SpMV has been the pursuit of many researchers. Parallel SpMV using multi-core processors has been a standard parallel method used by researchers. In reality, the number of non-zero elements in many sparse matrices is not evenly distributed, so parallelism without preprocessing will cause a large amount of performance loss due to uneven load. In this paper, we propose ALBUS (Absolute Load Balancing Using SIMD (Single Instruction Multiple Data)), a method for efficiently processing SpMV using load balancing and SIMD vectorization. On the one hand, ALBUS can achieve multi-core balanced load processing; on the other hand, it gives full play to the ability of SIMD vectorization parallelism under the CPU. We selected 20 sets of regular matrices and 20 sets of irregular matrices to form the Benchmark suite. We performed SpMV performance comparison tests on ALBUS, CSR5 (Compressed Sparse Row 5), Merge(Merge-based SpMV), and MKL (Math Kernel Library) under the same conditions. On the E5-2670 v3 CPU platform, For 20 sets of regular matrices, ALBUS can achieve an average speedup of 1.59x, 1.32x, 1.48x (up to 2.53x, 2.22x, 2.31x) compared to CSR5, Merge, MKL, respectively. For 20 sets of irregular matrices, ALBUS can achieve an average speedup of 1.38x, 1.42x, 2.44x (up to 2.33x, 2.24x, 5.37x) compared to CSR5, Merge, MKL, respectively.}
+}
+```
